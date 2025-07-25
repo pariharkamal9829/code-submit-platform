@@ -1,7 +1,13 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt/config'
+
 export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   css: ['@/assets/css/tailwind.css'],
   ssr: false,
+  nitro: {
+    preset: 'netlify'
+  },
   tailwindcss: {
     config: {
       darkMode: 'class',

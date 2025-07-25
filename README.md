@@ -68,28 +68,50 @@ A modern, feature-rich Vue 3 + Nuxt 3 + Firebase application for programming cha
 code-submit-platform/
 ├── 📦 assets/
 │   └── css/
-│       └── tailwind.css          # Custom animations and styles
+│       ├── main.css              # Global styles and base imports
+│       └── tailwind.css          # Custom animations and Tailwind styles
 ├── 🧩 components/
-│   └── AppHeader.vue             # Universal header with profile dropdown
+│   ├── AdminManagement.vue       # Admin user management interface
+│   ├── AppHeader.vue             # Universal header with profile dropdown
+│   ├── AppNavigation.vue         # Navigation component
+│   ├── CodeEditor.vue            # CodeMirror-based code editor
+│   └── LoginForm.vue             # Authentication form component
 ├── 🔄 composables/
+│   ├── useStore.ts               # Store utilities and helpers
 │   └── useTheme.js               # Theme management composable
+├── 🏗️ layouts/
+│   └── default.vue               # Main app layout with navigation
+├── 🛡️ middleware/
+│   ├── admin.ts                  # Admin route protection
+│   ├── auth.js                   # Authentication middleware
+│   ├── auth.ts                   # TypeScript auth middleware
+│   └── guest.ts                  # Guest-only route protection
 ├── 📄 pages/
-│   ├── index.vue                 # Landing page with authentication
+│   ├── admin/
+│   │   └── index.vue             # Admin dashboard
 │   ├── challenge.vue             # Multi-language coding interface
-│   └── admin/
-│       └── index.vue             # Admin dashboard
+│   ├── index.vue                 # Landing page with authentication
+│   └── login.vue                 # Login page
 ├── 🔌 plugins/
 │   └── firebase.client.js        # Firebase configuration and initialization
 ├── 🗄️ stores/
-│   ├── auth.ts                   # Authentication and admin management
+│   ├── admin.ts                  # Admin management store
+│   ├── auth.ts                   # Authentication and user management
 │   └── submissions.ts            # Submission handling and statistics
-├── 🛡️ middleware/
-│   └── auth.js                   # Route protection middleware
+├── 🌐 public/
+│   ├── favicon.ico               # Site favicon
+│   └── robots.txt                # SEO robots configuration
 ├── ⚙️ Configuration Files
+│   ├── .env                      # Environment variables (not in git)
+│   ├── .firebaserc               # Firebase project configuration
+│   ├── .gitignore                # Git ignore rules
+│   ├── app.vue                   # Root Vue component
+│   ├── firebase.json             # Firebase hosting/functions config
+│   ├── firestore.rules           # Firebase security rules
 │   ├── nuxt.config.ts            # Nuxt configuration with Tailwind
 │   ├── package.json              # Dependencies and scripts
-│   └── firestore-rules.txt       # Firebase security rules
-├── 💾 STABLE_VERSION_BACKUP_1/   # Rollback version backup
+│   ├── package-lock.json         # Locked dependency versions
+│   └── tsconfig.json             # TypeScript configuration
 └── 📚 README.md                  # This comprehensive guide
 ```
 
@@ -243,21 +265,60 @@ match /admins/{document} {
 
 ## 🚀 Deployment Options
 
-### Vercel (Recommended)
+### Netlify (Recommended)
+The project is optimized for Netlify deployment with automatic build configuration.
+
+#### 🔧 Netlify Setup Steps:
+1. **Connect Repository**:
+   - Go to [Netlify Dashboard](https://app.netlify.com)
+   - Click "New site from Git"
+   - Connect your GitHub account
+   - Select `pariharkamal9829/code-submit-platform`
+
+2. **Build Configuration**:
+   ```toml
+   # netlify.toml is already configured with:
+   Build command: npm run build
+   Publish directory: .output/public
+   Node version: 20
+   ```
+
+3. **Environment Variables**:
+   - Go to Site Settings → Environment Variables
+   - Add all Firebase configuration variables:
+   ```env
+   NUXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+   NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   NUXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   NUXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+   ```
+
+4. **Deploy**:
+   - Click "Deploy site"
+   - Netlify will automatically build and deploy your app
+   - Get your deployment URL (e.g., `https://amazing-app-123456.netlify.app`)
+
+#### 🔒 Firebase Configuration for Netlify:
+- Add your Netlify domain to Firebase Console → Authentication → Settings → Authorized domains
+- Example: `amazing-app-123456.netlify.app`
+
+#### 🐛 Build Issue Fix:
+The `.nuxt/tsconfig.app.json` missing file issue has been resolved with:
+- ✅ **Updated package.json**: Added `nuxt prepare` to build process
+- ✅ **Added netlify.toml**: Proper Netlify configuration
+- ✅ **Updated nuxt.config.ts**: Netlify preset and build optimization
+
+### Vercel (Alternative)
 ```bash
 # Connect GitHub repository
 # Auto-deployment on push to main branch
 # Environment variables configured in dashboard
 ```
 
-### Netlify
-```bash
-# Import from GitHub
-# Build command: npm run build
-# Publish directory: .output/public
-```
-
-### Firebase Hosting
+### Firebase Hosting (Alternative)
 ```bash
 firebase init hosting
 firebase deploy
@@ -286,16 +347,12 @@ firebase deploy
 
 ## 🔄 Version Control & Backup
 
-### Stable Version Backup
-- **Location**: `STABLE_VERSION_BACKUP_1/`
-- **Restore Script**: `RESTORE.ps1` for easy rollback
-- **Complete Backup**: All essential files preserved
-
 ### Git Workflow
 ```bash
 # Current version on GitHub
 git remote -v
 # origin https://github.com/pariharkamal9829/code-submit-platform.git
+# Ready for Netlify deployment
 ```
 
 ## 🐛 Troubleshooting
