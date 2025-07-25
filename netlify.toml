@@ -1,6 +1,6 @@
 [build]
   # Build command that ensures proper Nuxt setup
-  command = "npm run build"
+  command = "npm ci && npm run postinstall && npm run build"
   # Output directory for static files  
   publish = ".output/public"
 
@@ -9,6 +9,8 @@
   NODE_VERSION = "20"
   # Enable TypeScript support
   NUXT_TELEMETRY_DISABLED = "1"
+  # Ensure proper build environment
+  CI = "true"
 
 # Headers for security and performance
 [[headers]]

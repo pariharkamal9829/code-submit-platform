@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nuxt dev",
-    "build": "nuxt prepare && nuxt build",
-    "generate": "nuxt prepare && nuxt generate",
+    "build": "nuxt build",
+    "generate": "nuxt generate", 
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prestart": "npm run build"
   },
   "author": "Kamlesh Parihar",
   "license": "MIT",
