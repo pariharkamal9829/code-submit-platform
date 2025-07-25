@@ -2,7 +2,7 @@
   # Build command that ensures proper Nuxt setup
   command = "npm ci && npm run postinstall && npm run build"
   # Output directory for static files  
-  publish = ".output/public"
+  publish = ".output"
 
 [build.environment]
   # Node.js version for build
